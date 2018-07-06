@@ -1,0 +1,31 @@
+@import './base/spacing';
+@import './base/transition';
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.line {
+  border-bottom: 2px solid #cccccc;
+}
+
+.btn {
+  display: inline-flex;
+  padding: 5px 20px;
+  background: #dddddd;
+  border: 1px solid #aaaaaa;
+  font-size: 20px;
+  &:hover {
+    background: #cccccc;
+  }
+  &:focus {
+    outline: none;
+  }
+}
