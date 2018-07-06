@@ -19,7 +19,9 @@
             <div v-for="(item,index) in getCart" 
                 class="eachItem text-left">
                 <div class="eachItem-img">
-                    <div class="img"></div>
+                    <div style="display:inline-flex">
+                        <router-link class="img" :to="{name:'Detail',query:{productId : getProductName(item.item)}}"></router-link>
+                    </div>
                 </div>
                 <div class="eachItem-nameAndSize">
                     <div class="eachItem-name">{{item.item}}</div>
@@ -65,6 +67,7 @@ export default {
     computed: {
         ...mapState(['productList']),
         ...mapGetters(['getCart', 'getFee']),
+
     },
     methods: {
         ...mapActions(['updateFee', 'delCart', 'emptyCart', 'addNumInCart', 'delNumInCart']),
@@ -94,7 +97,12 @@ export default {
                 } else if (this.getCart[index].num == 1) {
                 }
             }
-        }
+        },
+        getProductName(val) {
+            if (val === 'productA') return 1;
+            if (val === 'productB') return 2;
+            if (val === 'productC') return 3;
+        },
     }
 }
 </script>
