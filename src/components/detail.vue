@@ -14,13 +14,16 @@
                     <option value="L">L</option>
                 </select>
             </div>
-            <div class="num mB10">
+            <div v-if="maxInputNum != 0" class="num mB10">
                 num :  
-                <input v-model="nowNum" min="0" :max="sizeInventory" type="number" name="num" id="num">
-                <span class="inventory mL10" v-if="nowNum != 0">
-                    remaining {{sizeInventory}} pieces
+                <input v-model="nowNum" min="0" :max="maxInputNum" type="number" name="num" id="num" :disabled="maxInputNum == 0">
+                <span class="inventory mL20" v-if="nowNum != 0">
+                    <small>{{maxInputNum}} left to buy | {{sizeInventory[nowSize]}} in Stock</small>
                 </span>
-                <span class="errorMsg mL10" v-else>Can't be zero</span>
+                <span class="errorMsg mL10" v-if="maxInputNum != 0 && nowNum == 0">Can't be zero</span>
+            </div>
+            <div v-else class="num outOfStock mB10">
+                 <span class="errorMsg mL10" v-if="maxInputNum== 0">Nothing Left To Buy</span>
             </div>
             <transition name="fade">
                 <button :disabled="nowNum == 0 || isLoading" class="btn mT70" @click="clickAddCart">
@@ -47,13 +50,12 @@ export default {
         this.updateFee();
     },
     watch: {
-        nowNum: function () {
-            if (this.nowNum > 20) {
-                this.nowNum = 20;
-            } else if (this.nowNum < 0) {
-                this.nowNum = 1;
-            };
+        nowSize() {
+            if (this.nowNum >= this.sizeInventory[this.nowSize]) this.nowNum = this.sizeInventory[this.nowSize];
         },
+        nowNum() {
+            if (this.nowNum > this.maxInputNum) this.nowNum = this.maxInputNum;
+        }
     },
     computed: {
         ...mapState(['productList']),
@@ -66,7 +68,27 @@ export default {
             }
         },
         sizeInventory() {
-            return this.productList[this.productId - 1].inventory[this.nowSize]
+            return this.productList[this.productId - 1].inventory
+        },
+        /** 
+         * 先取出購物車內對應的數量
+         */
+        currentItemNum() {
+            let currentItem = this.getCart.filter(element => {
+                return element.item == this.productList[this.productId - 1].item && element.size == this.nowSize;
+            });
+            if (Object.keys(currentItem).length !== 0) return currentItem[0].num; //因為item與size會是唯一 -> 等同於id
+            else return 0;
+        },
+        /** 
+         * 計算num欄位能輸入的最大值
+         */
+        maxInputNum() {
+            if (this.sizeInventory[this.nowSize] - this.currentItemNum > 0) {
+                return this.sizeInventory[this.nowSize] - this.currentItemNum;
+            } else {
+                return 0;
+            }
         }
     },
 
@@ -79,16 +101,14 @@ export default {
                 size: this.nowSize,
                 num: Number(this.nowNum),
             }
-            //number should return to 1
-            this.nowNum = 1;
             this.isLoading = true;
-            //call action to mutate
             setTimeout(() => {
                 this.isLoading = !this.isLoading;
                 this.addCart(args);
                 this.updateFee();
-            }, 1500);
 
+                this.nowNum = 1;
+            }, 500);
         },
     }
 }

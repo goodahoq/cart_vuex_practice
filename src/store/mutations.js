@@ -30,12 +30,24 @@ export const state = {
       },
     },
   ],
-  cart: [{
-    item: "productB",
-    num: 1,
-    price: 200,
-    size: "S",
-  }],
+  cart: [
+    //       {
+    //     item: "productB",
+    //     num: 1,
+    //     price: 200,
+    //     size: "S",
+    //   }, {
+    //     item: "productB",
+    //     num: 1,
+    //     price: 200,
+    //     size: "M",
+    //   }, {
+    //     item: "productB",
+    //     num: 1,
+    //     price: 200,
+    //     size: "L",
+    //   }
+  ],
   totalFee: 0,
 }
 

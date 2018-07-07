@@ -17,8 +17,8 @@
                 <div class="eachItem-del itemAnimated">to delete</div>
             </div>
             <div v-for="(item,index) in getCart" 
-                class="eachItem text-left">
-                <div class="eachItem-img">
+                class="eachItem text-left":key="index">
+                <div class="eachItem-img" > 
                     <div style="display:inline-flex">
                         <router-link class="img" :to="{name:'Detail',query:{productId : getProductName(item.item)}}"></router-link>
                     </div>
@@ -85,7 +85,7 @@ export default {
             let _inventory = compareObj.inventory[this.getCart[index].size];
             /** 邏輯 */
             if (val == 1) {
-                if (this.getCart[index].num <= _inventory) {
+                if (this.getCart[index].num < _inventory) {
                     this.addNumInCart(index);
                     this.updateFee();
                 } else if (this.getCart[index].num >= _inventory) {
