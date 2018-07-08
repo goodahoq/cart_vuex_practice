@@ -31,7 +31,7 @@
                     <div class="each-fee">total:  ${{getFee}}</div>
                 </div>
                 <div v-if="getCart.length != 0" class="btnGroup mT20">
-                    <router-link class="btn pull-left" :to="{name:'CartPage'}">view cart</router-link>
+                    <router-link @click.native="clickMask" class="btn pull-left" :to="{name:'CartPage'}">view cart</router-link>
                     <router-link class="btn pull-right" :to="{name:'Checkout'}">checkout</router-link>
                 </div>
             </div>
