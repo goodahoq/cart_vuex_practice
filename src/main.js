@@ -7,6 +7,19 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 import store from './store'
 
+import {
+  Button,
+  Select,
+  Option,
+  InputNumber
+} from 'element-ui';
+Vue.use(Button);
+Vue.use(Select);
+Vue.use(InputNumber);
+Vue.use(Option);
+import './assets/element-variables.scss'
+
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

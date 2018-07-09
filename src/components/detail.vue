@@ -6,22 +6,23 @@
         <div class="detail-col text-left">
             <div class="name mB10">{{productList[productId-1].item}}</div>
             <div class="price mB10 ">${{productList[productId-1].price}}</div>
+            
             <div class="size mB10 mT20">
-                Size : 
-                <select v-model="nowSize" name="size" id="size" class="">
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                </select>
+                <span class="subtitle">Size : </span>
+                <el-select class="size-body" v-model="nowSize" placeholder="size">
+                    <el-option  value="S">S</el-option>
+                    <el-option  value="M">M</el-option>
+                    <el-option  value="L">L</el-option>
+                </el-select>
             </div>
             <div v-if="maxInputNum != 0" class="num mB10">
-                num :  
-                <input v-model="nowNum" min="0" :max="maxInputNum" type="number" name="num" id="num" :disabled="maxInputNum == 0">
-                <span class="inventory mL20" v-if="nowNum != 0">
-                    <small>{{maxInputNum}} left to buy | {{sizeInventory[nowSize]}} in Stock</small>
-                </span>
-                <span class="errorMsg mL10" v-if="maxInputNum != 0 && nowNum == 0">Can't be zero</span>
+                <span class="subtitle">Quantity : </span>
+                <el-input-number class="num-body" v-model="nowNum" :min="0" :max="maxInputNum" label="quantity"></el-input-number>
             </div>
+            <div class="inventory mL100" v-if="nowNum != 0">
+                <small>{{maxInputNum}} left to buy | {{sizeInventory[nowSize]}} in Stock</small>
+            </div>
+            <div class="errorMsg mL100" v-if="maxInputNum != 0 && nowNum == 0">Can't be zero</div>
             <div v-else class="num outOfStock mB10">
                  <span class="errorMsg mL10" v-if="maxInputNum== 0">Nothing Left To Buy</span>
             </div>
@@ -115,11 +116,27 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../assets/base/utils";
 .name {
   font-size: 36px;
 }
 .price {
   font-size: 30px;
+}
+.size {
+  @include flex(start, center);
+  padding-right: 60%;
+}
+.subtitle {
+  flex: 1;
+}
+.size-body,
+.num-body {
+  flex: 2;
+}
+.num {
+  @include flex(start, center);
+  padding-right: 60%;
 }
 .errorMsg {
   color: rgb(224, 95, 95);

@@ -1,0 +1,37 @@
+$primary: #50FF44;
+$dark: #222222;
+$light: #ffffff;
+$baseLine: 10px;
+%clearGutter {
+  margin: 0;
+  padding: 0;
+}
+
+@function rhythm($level) {
+  @return $baseLine * ceil($level);
+}
+
+@function line($size) {
+  @return rhythm($size * 1.2 / $baseLine);
+}
+
+@mixin font($size, $line-height: auto) {
+  $line: line($size);
+  font-size: $size;
+  @if $line-height==auto or $line-height < $line {
+    line-height: $line;
+  }
+  @else {
+    line-height: $line-height;
+  }
+}
+
+@mixin flex($main, $other: $main) {
+  display: flex;
+  justify-content: $main;
+  align-items: $other;
+}
+
+@mixin outline($color, $px) {
+  outline: $px solid $color;
+}
