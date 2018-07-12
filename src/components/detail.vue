@@ -19,7 +19,7 @@
                 <span class="subtitle">Quantity : </span>
                 <el-input-number class="num-body" v-model="nowNum" :min="0" :max="maxInputNum" label="quantity"></el-input-number>
             </div>
-            <div class="inventory mL100" v-if="nowNum != 0">
+            <div class="inventory mL100" v-if="maxInputNum != 0 && nowNum != 0">
                 <small>{{maxInputNum}} left to buy | {{sizeInventory[nowSize]}} in Stock</small>
             </div>
             <div class="errorMsg mL100" v-if="maxInputNum != 0 && nowNum == 0">Can't be zero</div>
@@ -53,6 +53,7 @@ export default {
     watch: {
         nowSize() {
             if (this.nowNum >= this.sizeInventory[this.nowSize]) this.nowNum = this.sizeInventory[this.nowSize];
+            else this.nowNum = 1;
         },
         nowNum() {
             if (this.nowNum > this.maxInputNum) this.nowNum = this.maxInputNum;
@@ -76,9 +77,11 @@ export default {
          */
         currentItemNum() {
             let currentItem = this.getCart.filter(element => {
-                return element.item == this.productList[this.productId - 1].item && element.size == this.nowSize;
+                return element.item == this.productList[this.productId - 1].item &&
+                    element.size == this.nowSize;
+                //因為item與size會是唯一 -> 等同於id
             });
-            if (Object.keys(currentItem).length !== 0) return currentItem[0].num; //因為item與size會是唯一 -> 等同於id
+            if (Object.keys(currentItem).length !== 0) return currentItem[0].num;
             else return 0;
         },
         /** 
@@ -88,7 +91,7 @@ export default {
             if (this.sizeInventory[this.nowSize] - this.currentItemNum > 0) {
                 return this.sizeInventory[this.nowSize] - this.currentItemNum;
             } else {
-                return 0;
+                return 0; //因為存貨減掉目前購物車數量不能小於0
             }
         }
     },
@@ -103,6 +106,9 @@ export default {
                 num: Number(this.nowNum),
             }
             this.isLoading = true;
+            /**
+             * 假裝非同步
+             */
             setTimeout(() => {
                 this.isLoading = !this.isLoading;
                 this.addCart(args);
@@ -152,7 +158,7 @@ export default {
   width: 50%;
 }
 .detailImg {
-  margin: 0 auto;
+  margin: 5% auto;
   background: #cccccc;
   border: 1px solid #aaaaaa;
   width: 300px;

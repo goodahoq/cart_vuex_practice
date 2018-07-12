@@ -88,13 +88,11 @@ export default {
                 if (this.getCart[index].num < _inventory) {
                     this.addNumInCart(index);
                     this.updateFee();
-                } else if (this.getCart[index].num >= _inventory) {
                 }
             } else if (val == -1) {
                 if (this.getCart[index].num > 1) {
                     this.delNumInCart(index);
                     this.updateFee();
-                } else if (this.getCart[index].num == 1) {
                 }
             }
         },
