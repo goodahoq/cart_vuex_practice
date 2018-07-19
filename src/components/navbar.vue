@@ -16,7 +16,9 @@
                 <div class="eachFloat-item" 
                     v-for="(item,key) in getCart">
                     <div class="each-img">
-                        <div class="img"></div>
+                        <div class="img">
+                            <img :src="require(`@/assets/img/${item.item}.jpg`)" class="w100">
+                        </div>
                     </div>
                     <div class="each-content">
                         <div class="each-name">{{item.item}}</div>
@@ -31,8 +33,8 @@
                     <div class="each-fee">total:  ${{getFee}}</div>
                 </div>
                 <div v-if="getCart.length != 0" class="btnGroup mT20">
-                    <router-link @click.native="clickMask" class="btn pull-left" :to="{name:'CartPage'}">view cart</router-link>
-                    <router-link class="btn pull-right" :to="{name:'Checkout'}">checkout</router-link>
+                    <router-link @click.native="clickMask" class="btn-s btn pull-left" :to="{name:'CartPage'}">view cart</router-link>
+                    <router-link class=" btn-s btn pull-right" :to="{name:'Checkout'}">checkout</router-link>
                 </div>
             </div>
             <!-- 控制floatCart遮罩 -->
@@ -70,6 +72,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../assets/base/utils";
 .pull-right {
   float: right;
 }
@@ -79,9 +82,9 @@ export default {
 .navBar {
   display: inline-block;
   font-size: 24px;
-  color: #000;
+  color: $dark;
   width: 100%;
-  background: #aaaaaa;
+  background: $primary;
   padding-top: 10px;
   padding-bottom: 10px;
   margin-bottom: 60px;
@@ -89,11 +92,18 @@ export default {
 .navHome {
   float: left;
   margin-left: 15%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.2);
+  }
 }
 .navCart {
   position: relative;
   float: right;
   margin-right: 15%;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 .numSum {
   font-size: 12px;
@@ -105,17 +115,19 @@ export default {
   top: 33px;
   right: 0px;
   /** 定位 **/
-  width: 300px;
+  width: 350px;
   max-height: 500px;
-  background: #fff;
-  border: 2px solid #eeeeee;
+  background: $light;
+  border: 2px solid $dark;
+  border-radius: 10px;
   z-index: 2;
-  padding: 20px;
+  padding: 20px 30px;
   overflow: scroll;
 }
 .eachFloat-item {
   display: flex;
-  padding: 5px;
+  padding: 10px 0px;
+  border-bottom: 1px dashed $line;
 }
 .empty-item {
   font-size: 16px;
@@ -126,8 +138,9 @@ export default {
   .img {
     width: 100px;
     height: 100px;
-    background: #cccccc;
-    border: 1px solid #aaaaaa;
+    border: 1px solid $dark;
+    max-height: 100%;
+    overflow: hidden;
   }
 }
 .each-content {

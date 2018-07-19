@@ -18,3 +18,12 @@
     }
   }
 }
+
+@for $i from 0 through 100 {
+  @each $prop,
+  $abbrev in (width: w) {
+    .#{$abbrev}#{$i} {
+      #{$prop}: $i*1% !important;
+    }
+  }
+}

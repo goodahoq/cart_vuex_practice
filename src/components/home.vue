@@ -1,13 +1,14 @@
 <template>
     <div class="home">
-        <router-link class="card"
-                    v-for="(item,id) in productList"
-                    :to="{name:'Detail',query:{productId : id+1}}"
-                    :key="item.id">
-            <div class="fakeImg"></div>
-            <div>{{item.item}}</div>
-            <div>${{item.price}}</div>
-        </router-link>
+        <div class="card" v-for="(item,id) in productList">
+            <router-link class="card-body" :to="{name:'Detail',query:{productId : id+1}}" :key="item.id">
+                <div class="productImg">
+                    <img :src="require(`@/assets/img/${item.item}.jpg`)" alt="" class="w100">
+                </div>
+                <div class="productName">{{item.item}}</div>
+                <div class="productPrice">${{item.price}}</div>
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -29,20 +30,43 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../assets/base/utils";
 .home {
   font-size: 24px;
   display: flex;
 }
-.fakeImg {
+.productImg {
   background: #eeeeee;
   width: 200px;
   height: 200px;
   margin: 0 auto;
   margin-bottom: 30px;
-  border: 1px solid #cccccc;
 }
 .card {
   width: 33%;
   float: left;
+  padding: 20px 70px;
+}
+.card-body {
+  border: solid 2px $dark;
+  display: block;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  &:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: $shadow 10px 10px 14px;
+    color: $secondary;
+    border-color: $secondary;
+    .productName,
+    .productPrice {
+      transform: translate(2px, 2px);
+    }
+  }
+}
+.productName,
+.productPrice {
+  transition: all 0.2s ease-in;
 }
 </style>

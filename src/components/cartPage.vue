@@ -3,24 +3,24 @@
         <div class="cartContent">
             <div v-if="getCart.length == 0" class="ecahItem-empty">
                 <p>ＨＡＶＥ ＮＯＴＨＩＮＧ</p>
-                <router-link class="btn" :to="{name:'Home'}">buy</router-link>
+                <router-link class="btn btn-l mT40 mB20" :to="{name:'Home'}">buy</router-link>
             </div>
             <div v-else class="eachItem text-left">
-                <div class="eachItem-img">
-                </div>
+                <div class="eachItem-img"></div>
                 <div class="eachItem-nameAndSize">
                     <div class="eachItem-name itemAnimated">item</div>
                 </div>
                 <div class="eachItem-num itemAnimated">quantity</div>
                 <div class="eachItem-price itemAnimated">price</div>
                 <div class="eachItem-fee itemAnimated">fee</div>
-                <div class="eachItem-del itemAnimated">to delete</div>
+                <div class="eachItem-del itemAnimated">delete</div>
             </div>
-            <div v-for="(item,index) in getCart" 
-                class="eachItem text-left":key="index">
+            <div v-for="(item,index) in getCart" class="eachItem text-left" :key="index">
                 <div class="eachItem-img" > 
                     <div style="display:inline-flex">
-                        <router-link class="img" :to="{name:'Detail',query:{productId : getProductName(item.item)}}"></router-link>
+                        <router-link class="img" :to="{name:'Detail',query:{productId : getProductName(item.item)}}">
+                            <img :src="require(`@/assets/img/${item.item}.jpg`)" class="w100" alt="">
+                        </router-link>
                     </div>
                 </div>
                 <div class="eachItem-nameAndSize">
@@ -37,11 +37,11 @@
                 <div class="eachItem-fee"><i class="fas fa-dollar-sign mR5"></i>{{item.num * item.price}}</div>
                 <div @click="delCart(index)" class="eachItem-del itemAnimated text-center"><i class="fas fa-trash-alt fa-2x"></i></div>
             </div>
-            <div class="line mB20 mT20"></div>
+            <div class="cartPageLine mB20 mT20"></div>
             <div v-if="getCart.length != 0" class="cart-totalFee text-right mT30">total:  <i class="fas fa-dollar-sign mR5"></i>{{getFee}}</div>
             <div class="btnGroup m30">
-                <a @click="emptyCart()" class="btn pull-left">empty cart</a>
-                <router-link class="btn pull-right" :to="{name:'Checkout'}">checkout</router-link>
+                <a @click="emptyCart()" class="btn btn-l pull-left">empty cart</a>
+                <router-link class="btn  btn-l pull-right" :to="{name:'Checkout'}">checkout</router-link>
             </div>
         </div>
     </div>
@@ -106,6 +106,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../assets/base/utils";
 .cartPage {
   padding: 30px 200px;
 }
@@ -115,10 +116,16 @@ export default {
 .eachItem {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
+  &:first-child {
+    border-bottom: 2px solid $dark;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
 }
 .eachItem-img {
   flex: 2;
+  padding: 0px 20px;
   .img {
     width: 120px;
     height: 120px;

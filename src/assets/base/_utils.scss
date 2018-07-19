@@ -1,12 +1,18 @@
-$primary: #50FF44;
-$dark: #222222;
-$light: #ffffff;
+$primary: #B0CBCE;
+$secondary: #8A9791;
+$dark: #42403C;
+$light: #FCFCFC;
+$line:#D8D9D6;
+$shadow:#dddddd;
 $baseLine: 10px;
 %clearGutter {
   margin: 0;
   padding: 0;
 }
 
+// .w100 {
+//   width: 100%;
+// }
 @function rhythm($level) {
   @return $baseLine * ceil($level);
 }
