@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <navbar></navbar>
-    <router-view/>
+    <transition name="fade" mode="out-in" appear>
+        <router-view :key="$route.fullPath" />
+    </transition>
   </div>
 </template>
 
